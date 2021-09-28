@@ -3,27 +3,50 @@ import { ComponentType, HTMLProps, CSSProperties } from 'react';
 declare namespace Flex {
     interface FlexProps {
         /**
-         * Sets align-items. Top and bottom are shorthand for flex-start and flex-end respectively.
+         * Aligns children using CSS Flexbox `align-items`. Vertically aligns content if the `direction` is `row`, or horizontally aligns content if the `direction` is `column`.
+         *
+         * In the example below, `flex-start` will align the children content to the top.
+         *
+         * @default 'center'
          */
-        align?: CSSProperties['alignItems'] | 'top' | 'bottom' | undefined;
-
+        align?: CSSProperties[ 'alignItems' ];
         /**
-         * Determines the spacing in between children components. The `gap` value is a multiplier to the base value of `4`.
+         * The direction flow of the children content can be adjusted with `direction`. `column` will align children vertically and `row` will align children horizontally.
+         *
+         * @default 'row'
          */
-        gap?: number | undefined;
-
+        direction?: Array< CSSProperties[ 'flexDirection' ] | undefined >| CSSProperties[ 'flexDirection' ];
         /**
-         * Sets jusifty-content. Left and right are shorthand for flex-start and flex-end respectively, not the actual CSS value.
+         * Expands to the maximum available width (if horizontal) or height (if vertical).
+         *
+         * @default true
          */
-        justify?: CSSProperties['justifyContent'] | 'left' | 'right' | undefined;
-
+        expanded?: boolean;
         /**
-         * Reverses the flex direction.
+         * Spacing in between each child can be adjusted by using `gap`. The value of `gap` works as a multiplier to the library's grid system (base of `4px`).
+         *
+         * @default 2
          */
-        isReversed?: boolean | undefined;
+        gap?: number | string;
+        /**
+         * Horizontally aligns content if the `direction` is `row`, or vertically aligns content if the `direction` is `column`.
+         *
+         * @default 'space-between'
+         */
+        justify?: CSSProperties[ 'justifyContent' ];
+        /**
+         * Determines if children should wrap.
+         *
+         * @default false
+         */
+        wrap?: boolean;
+        /**
+         * @deprecated
+         */
+        isReversed?: boolean;
     }
 
-    interface Props extends FlexProps, HTMLProps<HTMLDivElement> {}
+    interface Props extends FlexProps, Omit<HTMLProps<HTMLDivElement>, 'wrap'> {}
 }
 
 declare const Flex: ComponentType<Flex.Props>;
